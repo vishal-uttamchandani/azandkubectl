@@ -1,8 +1,6 @@
-#!/bin/sh
+#!/bin/bash
 
-pattern=$1
-
-for rg in $(az group list -o tsv --query "[?contains(name, '$pattern')].name"); do
-        echo "deleting resource group $rg"
-        az group delete -y -n $rg --no-wait
+for rg in "$@"; do
+        echo "deleting '$rg' resource group ..."
+        az group delete -n $rg -y --no-wait
 done
